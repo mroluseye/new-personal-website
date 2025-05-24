@@ -225,7 +225,7 @@ const HeroSection = ({
             className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg"
           >
             <img
-              src="/public/profile-persona-website.jpg"
+              src="/profile-persona-website.jpg"
               alt="Profile"
               className="w-full h-full object-cover"
             />
