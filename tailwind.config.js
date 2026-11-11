@@ -51,58 +51,49 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        nude: {
-          DEFAULT: "#2E2A27",
-          light: "#3E3935",
-          dark: "#1E1A17",
+        // Brand palette: warm newsprint, ink, one signal colour and a highlighter.
+        paper: {
+          DEFAULT: "#F2EDE4",
+          deep: "#E6DFD2",
+          rule: "#CFC6B6",
         },
-        peach: {
-          DEFAULT: "#FFAA8A",
-          light: "#FFBEA6",
-          dark: "#FF966E",
+        ink: {
+          DEFAULT: "#16130F",
+          soft: "#57504A",
+          raised: "#221E19",
+          muted: "#A39A8E",
+        },
+        // Signal fails WCAG AA for small text on paper: keep it for display type and shapes.
+        signal: {
+          DEFAULT: "#E4401B",
+          deep: "#B8300C",
+          soft: "#FF9B80",
+        },
+        marker: {
+          DEFAULT: "#F2D21B",
         },
       },
-      backgroundColor: {
-        nude: "#2E2A27",
-        "nude-light": "#3E3935",
-        "nude-dark": "#1E1A17",
-        peach: "#FFAA8A",
-        "peach-light": "#FFBEA6",
-        "peach-dark": "#FF966E",
+      fontFamily: {
+        display: ["Fraunces", "Georgia", "serif"],
+        sans: ['"Schibsted Grotesk"', "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
       },
-      textColor: {
-        nude: "#2E2A27",
-        "nude-light": "#3E3935",
-        "nude-dark": "#1E1A17",
-        peach: "#FFAA8A",
-        "peach-light": "#FFBEA6",
-        "peach-dark": "#FF966E",
+      fontSize: {
+        kicker: ["0.75rem", { lineHeight: "1rem", letterSpacing: "0.14em" }],
+        "display-sm": ["clamp(2.25rem, 5vw, 4rem)", { lineHeight: "0.98" }],
+        "display-md": ["clamp(2.75rem, 6.5vw, 5.75rem)", { lineHeight: "0.95" }],
+        "display-lg": ["clamp(2.6rem, 8.4vw, 8.5rem)", { lineHeight: "0.9" }],
       },
-      borderColor: {
-        nude: "#2E2A27",
-        "nude-light": "#3E3935",
-        "nude-dark": "#1E1A17",
-        peach: "#FFAA8A",
-        "peach-light": "#FFBEA6",
-        "peach-dark": "#FF966E",
+      maxWidth: {
+        page: "84rem",
+        measure: "38rem",
       },
-      ringColor: {
-        nude: "#2E2A27",
-        "nude-light": "#3E3935",
-        "nude-dark": "#1E1A17",
-        peach: "#FFAA8A",
-        "peach-light": "#FFBEA6",
-        "peach-dark": "#FF966E",
+      boxShadow: {
+        print: "6px 6px 0 0 #16130F",
+        "print-lg": "10px 10px 0 0 #16130F",
+        "print-signal": "8px 8px 0 0 #E4401B",
+        "print-signal-lg": "12px 12px 0 0 #E4401B",
       },
-      gradientColorStops: {
-        nude: "#2E2A27",
-        "nude-light": "#3E3935",
-        "nude-dark": "#1E1A17",
-        peach: "#FFAA8A",
-        "peach-light": "#FFBEA6",
-        "peach-dark": "#FF966E",
-      },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -117,10 +108,20 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "draw-line": {
+          from: { strokeDashoffset: "1" },
+          to: { strokeDashoffset: "0" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.2" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "draw-line": "draw-line 1.1s cubic-bezier(0.65, 0, 0.35, 1) 0.9s both",
+        blink: "blink 1.6s ease-in-out infinite",
       },
     },
   },

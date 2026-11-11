@@ -1,200 +1,131 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { LINKS, PERSON } from "@/content/site";
+import Container from "./common/Container";
+import Kicker from "./common/Kicker";
+import SiteHeader from "./layout/SiteHeader";
+import SiteFooter from "./layout/SiteFooter";
 
-const PrivacyPolicy = () => {
-  return (
-    <div className="min-h-screen bg-[#f5f2ef] text-gray-900">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm py-4 fixed top-0 left-0 right-0 z-10">
-        <div className="container mx-auto flex justify-between items-center px-4">
-          <a href="/" className="text-lg font-medium">
-            Olu
-          </a>
-        </div>
-      </nav>
+/** Update this whenever the policy text changes; it must not be generated at render time. */
+const POLICY_LAST_UPDATED = "11 November 2026";
 
-      {/* Privacy Policy Content */}
-      <motion.div
-        className="container mx-auto py-24 px-4 md:px-8 max-w-4xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h1 className="text-4xl md:text-5xl font-bold mb-8">Privacy Policy</h1>
-        <p className="text-lg mb-6">
-          Last Updated: {new Date().toLocaleDateString()}
-        </p>
+interface PolicySectionProps {
+  title: string;
+  children: React.ReactNode;
+}
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">Introduction</h2>
-          <p className="mb-4">
-            This Privacy Policy explains how Olu Cole ("we," "us," or "our")
-            collects, uses, and shares information about you when you visit our
-            website, sign up for OluNotes, or contact us through our form.
-          </p>
-          <p className="mb-4">
-            We respect your privacy and are committed to protecting your
-            personal data. Please read this Privacy Policy carefully to
-            understand our practices regarding your personal data.
-          </p>
-        </section>
+const PolicySection = ({ title, children }: PolicySectionProps) => (
+  <section className="grid gap-4 border-t border-ink/20 py-10 md:grid-cols-12 md:gap-8">
+    <h2 className="font-display text-2xl font-medium tracking-tight md:col-span-4">{title}</h2>
+    <div className="space-y-4 leading-relaxed text-ink-soft md:col-span-8 [&_strong]:text-ink [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-5">
+      {children}
+    </div>
+  </section>
+);
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">
-            Information We Collect
-          </h2>
-          <p className="mb-4">
-            We may collect the following types of information:
-          </p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li>
-              <strong>Contact Information:</strong> When you fill out our
-              contact form or sign up for OluNotes, we collect your name and
-              email address.
-            </li>
-            <li>
-              <strong>Message Content:</strong> Any information you provide in
-              the message field of our contact form.
-            </li>
-            <li>
-              <strong>Usage Information:</strong> Information about how you
-              access and use our website.
-            </li>
-          </ul>
-        </section>
+const ExternalLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+  <a href={href} target="_blank" rel="noopener noreferrer" className="font-semibold text-ink underline underline-offset-4">
+    {children}
+    <span className="sr-only"> (opens in a new tab)</span>
+  </a>
+);
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">
-            How We Use Your Information
-          </h2>
-          <p className="mb-4">We use the information we collect to:</p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li>
-              Respond to your inquiries and provide the information you request
-            </li>
-            <li>Send you OluNotes newsletters if you've signed up for them</li>
-            <li>Improve our website and services</li>
-            <li>Comply with legal obligations</li>
-          </ul>
-        </section>
+const PrivacyPolicy = () => (
+  <div className="min-h-screen">
+    <SiteHeader />
+    <main id="main">
+      <Container className="max-w-5xl py-16 md:py-24">
+        <Kicker className="text-ink-soft">Small print, in plain English</Kicker>
+        <h1 className="mt-5 font-display text-display-md font-normal tracking-tight">Privacy policy</h1>
+        <p className="mt-4 font-mono text-sm text-ink-soft">Last updated: {POLICY_LAST_UPDATED}</p>
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">Third-Party Services</h2>
-          <p className="mb-4">We use the following third-party services:</p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li>
-              <strong>Formspree:</strong> We use Formspree to process form
-              submissions. When you submit a form on our website, your
-              information is processed by Formspree. Their privacy policy can be
-              found at{" "}
-              <a
-                href="https://formspree.io/legal/privacy-policy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline"
-              >
-                https://formspree.io/legal/privacy-policy
+        <div className="mt-12">
+          <PolicySection title="Introduction">
+            <p>
+              This policy explains how {PERSON.name} (“I”, “me”) collects, uses and shares information about you when
+              you visit this website, sign up for Cole’s Notes, or contact me through the form.
+            </p>
+            <p>I respect your privacy and only collect what I need to reply to you or send you the newsletter.</p>
+          </PolicySection>
+
+          <PolicySection title="What I collect">
+            <ul>
+              <li>
+                <strong>Contact details:</strong> your name and email address when you use the contact form, or your
+                email address when you sign up for Cole’s Notes.
+              </li>
+              <li>
+                <strong>Message content:</strong> anything you write in the contact form’s message field.
+              </li>
+              <li>
+                <strong>Usage information:</strong> basic technical information about how you access the site.
+              </li>
+            </ul>
+          </PolicySection>
+
+          <PolicySection title="How I use it">
+            <ul>
+              <li>To reply to your enquiry</li>
+              <li>To send you Cole’s Notes, if you signed up</li>
+              <li>To improve this website</li>
+              <li>To meet legal obligations</li>
+            </ul>
+          </PolicySection>
+
+          <PolicySection title="Third-party services">
+            <p>
+              <strong>Formspree</strong> processes form submissions on this site. When you send a form, Formspree
+              receives and stores your submission. Read{" "}
+              <ExternalLink href="https://formspree.io/legal/privacy-policy">Formspree’s privacy policy</ExternalLink>.
+            </p>
+          </PolicySection>
+
+          <PolicySection title="Storage and security">
+            <p>
+              I take reasonable steps to protect your information from loss, misuse and unauthorised access. No method
+              of sending or storing data online is completely secure, though.
+            </p>
+            <p>Contact form submissions and Cole’s Notes sign-ups are stored in Formspree’s secure database.</p>
+          </PolicySection>
+
+          <PolicySection title="Your rights">
+            <p>Under UK GDPR you have the right to:</p>
+            <ul>
+              <li>access the personal information I hold about you</li>
+              <li>ask me to correct anything inaccurate</li>
+              <li>ask me to delete your information</li>
+              <li>unsubscribe from Cole’s Notes at any time</li>
+            </ul>
+            <p>
+              To use any of these rights, email{" "}
+              <a href={LINKS.email} className="font-semibold text-ink underline underline-offset-4">
+                {LINKS.emailLabel}
               </a>
               .
-            </li>
-          </ul>
-        </section>
+            </p>
+          </PolicySection>
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">
-            Data Storage and Security
-          </h2>
-          <p className="mb-4">
-            We take reasonable measures to help protect your personal
-            information from loss, theft, misuse, unauthorized access,
-            disclosure, alteration, and destruction. However, no method of
-            transmission over the Internet or electronic storage is 100% secure.
-          </p>
-          <p className="mb-4">
-            Your contact form submissions are stored in Formspree's secure
-            database. Email addresses collected for OluNotes are also stored
-            securely.
-          </p>
-        </section>
+          <PolicySection title="Cookies">
+            <p>
+              This site stores your cookie choice in your browser. Formspree may set cookies when it processes a form
+              submission.
+            </p>
+            <p>
+              You can set your browser to refuse some or all cookies. If you do, parts of the site, such as the forms,
+              may not work properly.
+            </p>
+          </PolicySection>
 
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">Your Rights</h2>
-          <p className="mb-4">
-            Depending on your location, you may have certain rights regarding
-            your personal information, including:
-          </p>
-          <ul className="list-disc pl-6 mb-4 space-y-2">
-            <li>
-              The right to access the personal information we hold about you
-            </li>
-            <li>
-              The right to request correction of inaccurate personal information
-            </li>
-            <li>The right to request deletion of your personal information</li>
-            <li>
-              The right to withdraw consent for email marketing (unsubscribe)
-            </li>
-          </ul>
-          <p className="mb-4">
-            To exercise these rights, please contact us at hello@olucole.com.
-          </p>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">Cookies</h2>
-          <p className="mb-4">
-            Our website may use cookies and similar tracking technologies to
-            enhance your browsing experience. Formspree may also use cookies to
-            process form submissions.
-          </p>
-          <p className="mb-4">
-            You can set your browser to refuse all or some browser cookies, or
-            to alert you when websites set or access cookies. If you disable or
-            refuse cookies, please note that some parts of this website may
-            become inaccessible or not function properly.
-          </p>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">
-            Changes to This Privacy Policy
-          </h2>
-          <p className="mb-4">
-            We may update this Privacy Policy from time to time. We will notify
-            you of any changes by posting the new Privacy Policy on this page
-            and updating the "Last Updated" date.
-          </p>
-          <p className="mb-4">
-            You are advised to review this Privacy Policy periodically for any
-            changes.
-          </p>
-        </section>
-
-        <section className="mb-10">
-          <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
-          <p className="mb-4">
-            If you have any questions about this Privacy Policy, please contact
-            us at hello@olucole.com.
-          </p>
-        </section>
-      </motion.div>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-nude text-center text-sm text-peach">
-        <p>
-          © {new Date().getFullYear()} • Designed & Built with ♥ by Olu Cole
-        </p>
-        <div className="mt-2">
-          <a href="/" className="mx-2 hover:underline">
-            Home
-          </a>
-          <a href="/privacy" className="mx-2 hover:underline">
-            Privacy Policy
-          </a>
+          <PolicySection title="Changes to this policy">
+            <p>
+              I may update this policy from time to time. When I do, I’ll post the new version here and change the
+              “last updated” date above.
+            </p>
+          </PolicySection>
         </div>
-      </footer>
-    </div>
-  );
-};
+      </Container>
+    </main>
+    <SiteFooter />
+  </div>
+);
 
 export default PrivacyPolicy;
