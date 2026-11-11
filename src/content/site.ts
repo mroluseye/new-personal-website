@@ -15,7 +15,7 @@ export const PERSON = {
 
 export const LINKS = {
   email: "mailto:mroluseye@gmail.com",
-  emailLabel: "hello@olucole.com",
+  emailLabel: "mroluseye@gmail.com",
   x: "https://x.com/trymrcole",
   xHandle: "@trymrcole",
   linkedIn: "https://linkedin.com/in/seyecole",
