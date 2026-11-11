@@ -1,85 +1,77 @@
-import React, { useState, useEffect } from "react";
-import { Button } from "./ui/button";
+import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { LINKS } from "@/content/site";
+
+const CONSENT_STORAGE_KEY = "cookie-consent";
+const SHOW_DELAY_MS = 1200;
+
+type ConsentChoice = "accepted" | "rejected";
 
 interface CookieBannerProps {
   className?: string;
 }
 
-const CookieBanner = ({ className = "" }: CookieBannerProps) => {
+const CookieBanner = ({ className }: CookieBannerProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if user has already made a cookie choice
-    const cookieConsent = localStorage.getItem("cookie-consent");
-    if (!cookieConsent) {
-      // If no choice has been made, show the banner after a short delay
-      const timer = setTimeout(() => {
-        setIsVisible(true);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
+    if (localStorage.getItem(CONSENT_STORAGE_KEY)) return;
+    const timer = window.setTimeout(() => setIsVisible(true), SHOW_DELAY_MS);
+    return () => window.clearTimeout(timer);
   }, []);
 
-  const handleAccept = () => {
-    localStorage.setItem("cookie-consent", "accepted");
-    setIsVisible(false);
-  };
-
-  const handleReject = () => {
-    localStorage.setItem("cookie-consent", "rejected");
-    setIsVisible(false);
-  };
-
-  const handleClose = () => {
+  const handleChoice = (choice: ConsentChoice) => {
+    localStorage.setItem(CONSENT_STORAGE_KEY, choice);
     setIsVisible(false);
   };
 
   if (!isVisible) return null;
 
   return (
-    <div
-      className={`fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50 p-4 md:p-6 ${className}`}
+    <aside
+      aria-labelledby="cookie-title"
+      className={cn(
+        "fixed inset-x-3 bottom-3 z-50 border border-paper/20 bg-ink p-5 text-paper shadow-print-signal sm:inset-x-auto sm:left-5 sm:max-w-md",
+        className,
+      )}
     >
-      <div className="container mx-auto max-w-6xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <div className="flex-1 pr-8">
-          <h3 className="text-lg font-medium mb-2">Cookie Notice</h3>
-          <p className="text-sm text-gray-600">
-            This website uses cookies to enhance your browsing experience and to
-            process form submissions. By clicking "Accept", you consent to the
-            use of cookies. You can also reject non-essential cookies. For more
-            information, please visit our{" "}
-            <a href="/privacy" className="text-blue-600 hover:underline">
-              Privacy Policy
-            </a>
-            .
-          </p>
-        </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Button
-            variant="outline"
-            onClick={handleReject}
-            className="whitespace-nowrap"
-          >
-            Reject
-          </Button>
-          <Button
-            onClick={handleAccept}
-            className="whitespace-nowrap bg-peach hover:bg-peach/90"
-          >
-            Accept
-          </Button>
-        </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleClose}
-          className="absolute top-2 right-2 md:static"
+      <button
+        type="button"
+        onClick={() => setIsVisible(false)}
+        aria-label="Close cookie notice"
+        className="absolute right-1 top-1 inline-flex h-11 w-11 items-center justify-center text-ink-muted hover:text-paper"
+      >
+        <X aria-hidden="true" className="h-4 w-4" />
+      </button>
+      <h2 id="cookie-title" className="pr-10 font-mono text-kicker font-bold uppercase text-marker">
+        Cookie notice
+      </h2>
+      <p className="mt-2 text-sm leading-relaxed text-paper/85">
+        This site uses essential storage to remember this choice, and Formspree may set cookies when you send a form.
+        Read the{" "}
+        <a href={LINKS.privacy} className="font-semibold text-paper underline underline-offset-4">
+          privacy policy
+        </a>
+        .
+      </p>
+      <div className="mt-4 flex flex-wrap gap-3">
+        <button
+          type="button"
+          onClick={() => handleChoice("accepted")}
+          className="inline-flex min-h-11 items-center bg-marker px-5 text-sm font-semibold text-ink hover:bg-paper"
         >
-          <X size={18} />
-        </Button>
+          Accept cookies
+        </button>
+        <button
+          type="button"
+          onClick={() => handleChoice("rejected")}
+          className="inline-flex min-h-11 items-center border border-paper/40 px-5 text-sm font-semibold hover:border-paper"
+        >
+          Reject non-essential
+        </button>
       </div>
-    </div>
+    </aside>
   );
 };
 

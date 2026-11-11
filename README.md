@@ -1,30 +1,34 @@
-# React + TypeScript + Vite
+# olucole.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal site for Olu Cole: Lead Delivery Manager, Agile Leader, Founder, Agentic AI Advocate and Context Engineer. It introduces the five roles, showcases four shipped products (Energity, bythenumbers, calltoduty, Mivva), collects Cole's Notes sign-ups and takes contact enquiries.
 
-Currently, two official plugins are available:
+## Run it locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Open http://localhost:5173.
+
+## Edit the content
+
+All copy, links and product details live in `src/content/site.ts`. Change words there; the section components only render what that file exports.
+
+- Product thumbnails: `public/products/*.jpg` (1440 × 900 screenshots of each live site).
+- Portrait: `public/profile-persona-website.jpg`.
+- Link preview image: `public/og-image.jpg`.
+
+## Configure
+
+- **Forms:** the contact form and Cole's Notes sign-up both post to the Formspree endpoint in `FORMSPREE_ENDPOINT` (`src/content/site.ts`). Submissions arrive in that Formspree account.
+- **Design tokens:** colours (paper, ink, signal, marker), fonts and shadows are in `tailwind.config.js`. Base styles and the print-grain texture are in `src/index.css`.
+- **Fonts:** Fraunces, Schibsted Grotesk and JetBrains Mono load from Google Fonts in `index.html`.
+
+## Deploy
+
+```bash
+npm run build
+```
+
+Upload the `dist/` folder to any static host (Vercel, Netlify, Cloudflare Pages). The site uses client-side routing for `/privacy`, so configure the host to serve `index.html` for unknown paths.
